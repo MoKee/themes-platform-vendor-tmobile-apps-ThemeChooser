@@ -70,8 +70,6 @@ public class ThemeChooser extends Activity {
 
     private boolean mShowUninstallIcon = true;
 
-    private boolean mShowApplyIcon = true;
-
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -176,12 +174,6 @@ public class ThemeChooser extends Activity {
             menu.getItem(1).setVisible(false);
         }
 
-        if(mShowApplyIcon){
-            menu.getItem(0).setVisible(true);
-        } else {
-            menu.getItem(0).setVisible(false);
-        }
-
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -248,15 +240,11 @@ public class ThemeChooser extends Activity {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             ThemeItem item = (ThemeItem)parent.getItemAtPosition(position);
             mShowUninstallIcon = true;
-            mShowApplyIcon = true;
             if (item.getPackageName().isEmpty()) {
                 mShowUninstallIcon = false;
             }
-            if (!item.hasThemePackageScope()) {
-                mShowApplyIcon = false;
-            }
             String text = item.getName();
-            mThemeNameView.setText(mShowApplyIcon ? text : text + " " + getString(R.string.theme_incompatible));
+            mThemeNameView.setText(text);
 
             ThemeChooser.this.invalidateOptionsMenu();
         }
